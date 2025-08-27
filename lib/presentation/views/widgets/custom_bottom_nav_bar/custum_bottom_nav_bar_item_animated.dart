@@ -8,6 +8,7 @@ class AnimatedNavBarItem extends StatelessWidget {
   final Color selectedColor;
   final Color unSelectedColor;
   final VoidCallback onTap;
+  final bool showActiveBar; // Option pour afficher/masquer la barre active
 
   const AnimatedNavBarItem({
     super.key,
@@ -16,6 +17,7 @@ class AnimatedNavBarItem extends StatelessWidget {
     required this.selectedColor,
     required this.unSelectedColor,
     required this.onTap,
+    this.showActiveBar = true, // Valeur par défaut
   });
 
   @override
@@ -30,27 +32,28 @@ class AnimatedNavBarItem extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             // Utilisation de TweenAnimationBuilder pour le trait
-            Positioned(
-              top: 0,
-              child: TweenAnimationBuilder<double>(
-                tween: Tween<double>(
-                  begin: 0,
-                  end: isSelected ? 1 : 0,
+            if (showActiveBar) // Conditionnellement afficher la barre active
+              Positioned(
+                top: 0,
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween<double>(
+                    begin: 0,
+                    end: isSelected ? 1 : 0,
+                  ),
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  builder: (context, value, child) {
+                    return Container(
+                      width: 32 * value,
+                      height: 3,
+                      decoration: BoxDecoration(
+                        color: selectedColor,
+                        borderRadius: BorderRadius.circular(1.5),
+                      ),
+                    );
+                  },
                 ),
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-                builder: (context, value, child) {
-                  return Container(
-                    width: 32 * value,
-                    height: 3,
-                    decoration: BoxDecoration(
-                      color: selectedColor,
-                      borderRadius: BorderRadius.circular(1.5),
-                    ),
-                  );
-                },
               ),
-            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
