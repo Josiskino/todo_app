@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../config/theme/theme.dart';
 import '../../../../core/constants/app_images.dart';
+import '../../../../core/providers/theme_provider.dart';
 
 class ImagePickerBottomSheet {
   static Future<String?> show(BuildContext context, WidgetRef ref) async {
